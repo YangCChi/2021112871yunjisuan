@@ -23,3 +23,8 @@ brain/
 ~$*
 .~*
 
+# Ignore report and task description docs
+实验报告模版.docx
+课程设计任务书-final.pdf
+
+

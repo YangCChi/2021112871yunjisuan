@@ -18,3 +18,8 @@ brain/
 *fig*.py
 *revert*.py
 *render*.py
+
+# Ignore temporary Word/Office files
+~$*
+.~*
+

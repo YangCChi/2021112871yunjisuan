@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-svc
+  namespace: default
+  annotations:
+    # 华为云必填注解，绑定独享型/共享型 ELB
+    kubernetes.io/elb.class: union
+spec:
+  type: LoadBalancer # 外网暴露
+  selector:
+    app: backend
+  ports:
+  - port: 80
+    targetPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-svc
+  namespace: default
+spec:
+  type: ClusterIP # 仅内部访问
+  selector:
+    app: redis
+  ports:
+  - port: 6379
+    targetPort: 6379

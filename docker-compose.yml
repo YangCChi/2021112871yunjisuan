@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  # 前端服务 (Nginx)
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  # 后端服务 (Flask)
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-} # 本地开发密码为空即可
+    networks:
+      default:
+        aliases:
+          - backend-svc # 重点：配置网络别名，让前端容器能用 http://backend-svc:5000 访问到它
+    depends_on:
+      - redis
+
+  # 数据库服务 (Redis)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"

@@ -1,0 +1,22 @@
+# 使用教师提供的 PySpark 基础镜像作为底座
+# 如果教师未指定，也可以使用 Apache Spark 官方 PySpark 镜像：apache/spark-py:v3.4.0
+FROM apache/spark-py:v3.4.0
+
+USER root
+WORKDIR /opt/spark/work
+
+# 安装必要的依赖包（如果有的话，如 pandas 等，官方镜像已带 pyspark）
+# RUN pip install --no-cache-dir pandas
+
+# 将编写的清洗与 SQL 统计分析脚本复制到容器中
+COPY analysis.py /opt/spark/work/analysis.py
+COPY wordcount.py /opt/spark/work/wordcount.py
+
+COPY douban_movies.csv /opt/spark/work/douban_movies.csv
+
+# 赋予 185 用户对 /opt/spark/work 的读写权限
+RUN chown -R 185:0 /opt/spark/work && chmod -R 775 /opt/spark/work
+WORKDIR /opt/spark/work
+
+# 恢复默认的 spark 用户运行
+USER 185

@@ -1,0 +1,20 @@
+# Ignore large datasets
+douban_movies.csv
+
+# Ignore Helm charts
+*.tgz
+
+# Ignore Mac OS system files
+.DS_Store
+
+# Ignore Gemini system logs and temp files
+.gemini/
+.system_generated/
+scratch/
+brain/
+*inspect*.py
+*fill*.py
+*addon*.py
+*fig*.py
+*revert*.py
+*render*.py
